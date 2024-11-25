@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <title>Ctrl+Care</title>
+  <link href="/public/styles.css" rel="stylesheet">
+  <link rel="shortcut icon" href="/public/assets/logo1.ico">
+</head>
+<body class="p-4">
+  <h1 class="text-2xl font-bold mb-4">Patient Records</h1>
+  <form action="/add" method="POST" class="mb-4">
+    <input type="text" name="name" placeholder="Name" required class="border p-2">
+    <input type="date" name="birth_date" class="border p-2">
+    <input type="text" name="gender" placeholder="Gender" class="border p-2">
+    <input type="text" name="contact_info" placeholder="Contact Info" class="border p-2">
+    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Add Patient</button>
+
+  </form>
+  <table class="border-collapse border border-gray-400 w-full">
+    <tr>
+      <th class="border border-gray-400 p-2">ID</th>
+      <th class="border border-gray-400 p-2">Name</th>
+      <th class="border border-gray-400 p-2">Actions</th>
+    </tr>
+    <% patients.forEach(patient => { %>
+      <tr>
+        <td class="border border-gray-400 p-2"><%= patient.id %></td>
+        <td class="border border-gray-400 p-2"><%= patient.name %></td>
+        <td class="border border-gray-400 p-2">
+          <a href="/edit/<%= patient.id %>" class="text-blue-500">Edit</a>
+          <a href="/delete/<%= patient.id %>" class="text-red-500">Delete</a>
+        </td>
+      </tr>
+    <% }); %>
+  </table>
+</body>
+</html>
