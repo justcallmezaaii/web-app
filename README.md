@@ -9,7 +9,7 @@
  
 <br />  
 <br />  
-<a href="[]()">View Demo</a>  
+<a href="[https://ctrl-care.onrender.com](https://ctrl-care.onrender.com)">View Demo</a>  
 </p>  
 </div>  
 
@@ -22,11 +22,11 @@ Ctrl+Care is a web application that allows users to manage electronic medical re
 ## How to Run Locally 
 1. Clone the repository: 
 ```sh  
-git clone <repository-url>
+git clone https://github.com/justcallmezaaii/web-app
 ```  
 2. Install dependencies:
 ```sh  
-npm install
+npm install node ejs express  
 ```  
 3. Start the application:
 ```sh  
