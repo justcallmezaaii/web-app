@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const patientRoutes = require('./routes/patientRoutes');
 const diagnosisRoutes = require('./routes/diagnosisRoutes');
+const patientController = require('./controllers/patientController');
 const sqlite3 = require('sqlite3').verbose();
 const db = new sqlite3.Database('./emr.db');
 
@@ -13,7 +14,7 @@ app.use(express.static('public'));
 
 app.use('/patients', patientRoutes);
 app.use('/diagnoses', diagnosisRoutes);
-
+app.post('/add', patientController.addPatient);
 
 app.get('/', (req, res) => {
     db.all('SELECT * FROM patients', [], (err, rows) => {

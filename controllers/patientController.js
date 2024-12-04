@@ -2,9 +2,13 @@ const { database } = require('../models/database');
 
 // fetch all patients rec
 exports.getAllPatients = (req, res) => {
-  database.getAll('patients', (err, rows) => {
-    if (err) return res.status(500).send(err);
-    res.render('patients', { patients: rows });
+  const db = require('../models/database').db; // Import the database connection
+  db.all('SELECT * FROM patients', [], (err, rows) => {
+    if (err) {
+      console.error(err.message);
+      return res.status(500).send('Database error');
+    }
+    res.render('index', { patients: rows }); // Render the correct view and pass rows
   });
 };
 
@@ -15,8 +19,11 @@ exports.addPatient = (req, res) => {
   const fields = ['name', 'birth_date', 'gender', 'contact_info'];
 
   database.add('patients', data, fields, (err) => {
-    if (err) return res.status(500).send(err);
-    res.redirect('/patients');
+      if (err) {
+          console.error(err.message);
+          return res.status(500).send('Database error');
+      }
+      res.render('index', { patients: rows }); // Redirect to patients list after adding
   });
 };
 
@@ -28,7 +35,7 @@ exports.updatePatient = (req, res) => {
 
   database.update('patients', data, fields, id, (err) => {
     if (err) return res.status(500).send(err);
-    res.redirect('/patients');
+    res.render('index', { patients: rows });
   });
 };
 
@@ -38,6 +45,6 @@ exports.deletePatient = (req, res) => {
 
   database.delete('patients', id, (err) => {
     if (err) return res.status(500).send(err);
-    res.redirect('/patients');
+    res.render('index', { patients: rows });
   });
 };
