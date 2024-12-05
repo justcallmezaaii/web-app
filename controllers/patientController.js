@@ -23,7 +23,16 @@ exports.addPatient = (req, res) => {
           console.error(err.message);
           return res.status(500).send('Database error');
       }
-      res.render('index', { patients: rows }); // redirect to patients list after adding
+
+      // Fetch the updated list of patients after adding
+      const db = require('../models/database').db;
+      db.all('SELECT * FROM patients', [], (err, rows) => {
+          if (err) {
+              console.error(err.message);
+              return res.status(500).send('Database error');
+          }
+          res.render('index', { patients: rows }); // Render the updated list of patients
+      });
   });
 };
 
@@ -31,11 +40,19 @@ exports.addPatient = (req, res) => {
 exports.updatePatient = (req, res) => {
   const { id, name, birth_date, gender, contact_info } = req.body;
   const data = [name, birth_date, gender, contact_info];
-  const fields = ['name', 'birth_date', 'gender', 'contact_info'];
 
-  database.update('patients', data, fields, id, (err) => {
+  database.update('patients', data, ['name', 'birth_date', 'gender', 'contact_info'], id, (err) => {
     if (err) return res.status(500).send(err);
-    res.render('index', { patients: rows });
+    
+    // fetch the updated list of patients after updating
+    const db = require('../models/database').db;
+    db.all('SELECT * FROM patients', [], (err, rows) => {
+      if (err) {
+        console.error(err.message);
+        return res.status(500).send('Database error');
+      }
+      res.render('index', { patients: rows }); // render the updated list of patients
+    });
   });
 };
 
@@ -56,20 +73,42 @@ exports.getEditPatient = (req, res) => {
 exports.updatePatient = (req, res) => {
   const { id, name, birth_date, gender, contact_info } = req.body;
   const data = [name, birth_date, gender, contact_info];
+  const fields = ['name', 'birth_date', 'gender', 'contact_info']; // Ensure fields are defined
 
-  database.update('patients', data, id, (err) => {
+  database.update('patients', data, fields, id, (err) => {
     if (err) return res.status(500).send(err);
-    res.redirect('/patients'); // redirect to the patients list after updating
+    
+    // Fetch the updated list of patients after updating
+    const db = require('../models/database').db;
+    db.all('SELECT * FROM patients', [], (err, rows) => {
+      if (err) {
+        console.error(err.message);
+        return res.status(500).send('Database error');
+      }
+      res.render('index', { patients: rows }); // Render the updated list of patients
+    });
   });
-};
+}
 
 
 // delete a patient rec
 exports.deletePatient = (req, res) => {
-  const { id } = req.params;
+  const id = req.params.id; // get the patient ID from the URL
 
   database.delete('patients', id, (err) => {
-    if (err) return res.status(500).send(err);
-    res.redirect('/patients'); // redirect to the patients list after deleting
+      if (err) {
+          console.error(err.message);
+          return res.status(500).send('Database error');
+      }
+
+      // redirect or fetch the updated list of patients
+      const db = require('../models/database').db;
+      db.all('SELECT * FROM patients', [], (err, rows) => {
+          if (err) {
+              console.error(err.message);
+              return res.status(500).send('Database error');
+          }
+          res.render('index', { patients: rows }); // render the updated list of patients
+      });
   });
 };

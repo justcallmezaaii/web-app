@@ -38,6 +38,6 @@ app.get('/Rx', (req, res) => {
     res.render('Rx'); // ensure you have Rx.ejs in views
 });
 
-// Start server
+// start server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
