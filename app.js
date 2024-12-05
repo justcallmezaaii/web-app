@@ -12,19 +12,32 @@ app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
+
 app.use('/patients', patientRoutes);
 app.use('/diagnoses', diagnosisRoutes);
 app.post('/add', patientController.addPatient);
 
+// main page route
 app.get('/', (req, res) => {
     db.all('SELECT * FROM patients', [], (err, rows) => {
         if (err) {
             console.error(err.message);
             return res.status(500).send('Database error');
         }
-        res.render('index', { patients: rows });
+        res.render('index', { patients: rows }); // render index with patients
     });
 });
 
+// home page route
+app.get('/home', (req, res) => {
+    res.render('home'); // ensure you have home.ejs in views
+});
+
+// Rx page route
+app.get('/Rx', (req, res) => {
+    res.render('Rx'); // ensure you have Rx.ejs in views
+});
+
+// Start server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
