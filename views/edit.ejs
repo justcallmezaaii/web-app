@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link href="public/styles.css" rel="stylesheet">
+  <title>Edit Patient</title>
+</head>
+<body class="p-4">
+  <h1 class="text-2xl font-bold mb-4">Edit Patient</h1>
+  <form action="/patients/edit/<%= patient.id %>" method="POST" class="mb-4">
+    <input type="text" name="name" value="<%= patient.name %>" required class="border p-2">
+    <input type="date" name="birth_date" value="<%= patient.birth_date %>" class="border p-2">
+    <input type="text" name="gender" value="<%= patient.gender %>" class="border p-2">
+    <input type="text" name="contact_info" value="<%= patient.contact_info %>" class="border p-2">
+    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Update Patient</button>
+  </form>
+</body>
+</html>
