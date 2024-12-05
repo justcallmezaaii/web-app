@@ -9,7 +9,7 @@
  
 <br />  
 <br />  
-<a href="[https://ctrl-care.onrender.com](https://ctrl-care.onrender.com)">View Demo</a>  
+<a href="https://ctrl-care.onrender.com">View Demo</a>  
 </p>  
 </div>  
 
