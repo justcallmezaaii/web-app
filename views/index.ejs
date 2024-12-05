@@ -1,37 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CTRL+Care</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-  <title>Ctrl+Care</title>
-  <link href="public/styles.css" rel="stylesheet">
-  <link rel="shortcut icon" href="public/assets/logo1.ico">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="logo1.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@200..900&display=swap" rel="stylesheet">  
+  <style>
+    form, td {
+      font-family: Inconsolata;
+    }
+  </style>
 </head>
-<body class="p-4">
-  <h1 class="text-2xl font-bold mb-4">Patient Records</h1>
-  <form action="/patients/add" method="POST" class="mb-4">
-    <input type="text" name="name" placeholder="Name" required class="border p-2">
-    <input type="date" name="birth_date" class="border p-2">
-    <input type="text" name="gender" placeholder="Gender" class="border p-2">
-    <input type="text" name="contact_info" placeholder="Contact Info" class="border p-2">
-    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Add Patient</button>
+<body class="bg-gray-200 p-4">
+  <header class="absolute inset-x-0 top-0 z-50">
+    <nav class="flex items-center justify-between p-6 lg:px-8" aria-label="Global">
+      <div class="flex lg:flex-1">
+        <a href="home.html" class="-m-1.5 p-1.5">
+          <span class="sr-only">CTRL+Care</span>
+          <img class="h-14 w-auto" src="/public/assets/logokeycap1.png" alt="">
+        </a>
+      </div>
+      <div class="hidden lg:flex lg:gap-x-12">
+        <a href="home.html" class="text-sm font-semibold text-gray-900">Home</a>
+        <a href="index.ejs" class="text-sm font-semibold text-blue-900">Patient Records</a>
+        <a href="#" class="text-sm font-semibold text-gray-900">Diagnosis</a>
+        <a href="Rx.html" class="text-sm font-semibold text-gray-900">Rx</a>
+      </div>
+      <div class="hidden lg:flex lg:flex-1 lg:justify-end">
+        <a href="#" class="text-sm font-semibold text-gray-900">Log in <span aria-hidden="true">&rarr;</span></a>
+      </div>
+    </nav>
+  </header>
 
-  </form>
-  <table class="border-collapse border border-gray-400 w-full">
-    <tr>
-      <th class="border border-gray-400 p-2">ID</th>
-      <th class="border border-gray-400 p-2">Name</th>
-      <th class="border border-gray-400 p-2">Actions</th>
-    </tr>
-    <% patients.forEach(patient => { %>
-      <tr>
-        <td class="border border-gray-400 p-2"><%= patient.id %></td>
-        <td class="border border-gray-400 p-2"><%= patient.name %></td>
-        <td class="border border-gray-400 p-2">
-          <a href="patients/edit/<%= patient.id %>" class="text-blue-500">Edit</a>
-          <a href="patients/delete/<%= patient.id %>" class="text-red-500">Delete</a>
-        </td>
-      </tr>
-    <% }); %>
-  </table>
+  <div class="mt-20">
+    <h1 class="text-2xl font-bold mb-4">Patient Records</h1>
+    <form action="/patients/add" method="POST" class="mb-4">
+      <div class="flex flex-col space-y-2">
+        <input type="text" name="name" placeholder="Name" required class="border p-2 rounded">
+        <input type="date" name="birth_date" class="border p-2 rounded">
+        <input type="text" name="gender" placeholder="Gender" class="border p-2 rounded">
+        <input type="text" name="contact_info" placeholder="Contact Info" class="border p-2 rounded">
+        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Add Patient</button>
+      </div>
+    </form>
+
+    <table class="border-collapse border border-gray-400 w-full mt-4">
+      <thead>
+        <tr>
+          <th class="border border-gray-400 p-2">ID</th>
+          <th class="border border-gray-400 p-2">Name</th>
+          <th class="border border-gray-400 p-2">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% patients.forEach(patient => { %>
+          <tr>
+            <td class="border border-gray-400 p-2"><%= patient.id %></td>
+            <td class="border border-gray-400 p-2"><%= patient.name %></td>
+            <td class="border border-gray-400 p-2">
+              <a href="patients/edit/<%= patient.id %>" class="text-blue-500 hover:underline">Edit</a>
+              <a href="patients/delete/<%= patient.id %>" class="text-red-500 hover:underline">Delete</a>
+            </td>
+          </tr>
+        <% }); %>
+      </tbody>
+    </table>
+  </div>
 </body>
 </html>
