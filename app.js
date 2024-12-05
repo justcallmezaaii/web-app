@@ -7,11 +7,9 @@ const sqlite3 = require('sqlite3').verbose();
 const db = new sqlite3.Database('./emr.db');
 
 const app = express();
-
+app.use('/public', express.static('public'));
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static('public'));
-
 
 app.use('/patients', patientRoutes);
 app.use('/diagnoses', diagnosisRoutes);
@@ -30,12 +28,12 @@ app.get('/', (req, res) => {
 
 // home page route
 app.get('/home', (req, res) => {
-    res.render('home'); // ensure you have home.ejs in views
+    res.render('home'); //
 });
 
 // Rx page route
 app.get('/Rx', (req, res) => {
-    res.render('Rx'); // ensure you have Rx.ejs in views
+    res.render('Rx'); // 
 });
 
 // start server
